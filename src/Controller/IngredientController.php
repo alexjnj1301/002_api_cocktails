@@ -103,6 +103,7 @@ class IngredientController extends AbstractController
     }
 
     // PUT : Modifier un ingrédient
+    // test commit 3
     #[Route('/api/ingredients/{id}', name: 'ingredient.update', methods: ['PUT'])]
     public function updateIngredient(
         Ingredient $ingredient,

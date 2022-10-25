@@ -16,11 +16,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class IngredientRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructeur
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Ingredient::class);
     }
-
+    /**
+     * Méthode pour sauvegarder un ingrédient
+     *
+     * @param Ingredient $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function save(Ingredient $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -29,7 +40,13 @@ class IngredientRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    /**
+     * Méthode pour supprimer un ingrédient
+     *
+     * @param Ingredient $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function remove(Ingredient $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -64,6 +81,13 @@ class IngredientRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+    /**
+     * Méthode pour sortir tous les ingrédients "on" avec une pagination
+     *
+     * @param [type] $page
+     * @param [type] $limit
+     * @return void
+     */
     public function findWithPagination($page, $limit){
         $qb = $this->createQueryBuilder('i');
         $qb->setFirstResult(($page - 1) * $limit);
@@ -71,7 +95,12 @@ class IngredientRepository extends ServiceEntityRepository
         $qb->where('i.status = \'on\'');
         return $qb->getQuery()->getResult();
     }
-
+    /**
+     * Méthode pour sortir tous les ingrédients en fonction de leur statut
+     *
+     * @param [type] $status
+     * @return void
+     */
     public function findWithStatus($status)
     {
         $qb = $this->createQueryBuilder('i');

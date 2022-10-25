@@ -16,11 +16,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class RecetteRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructeur
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Recette::class);
     }
-
+    /**
+     * Méthode pour save des Recettes
+     *
+     * @param Recette $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function save(Recette $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -29,7 +40,13 @@ class RecetteRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    /**
+     * Méthode pour supprimer des Recettes
+     *
+     * @param Recette $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function remove(Recette $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -38,7 +55,12 @@ class RecetteRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    /**
+     * Méthode pour trouver une, ou plusieurs recettes, à partir d'un ingrédient
+     *
+     * @param [type] $nameIngredient
+     * @return void
+     */
     public function findRecetteByIngredient($nameIngredient)
     {
         foreach($this->recette_ingredient as $ingredient)
@@ -47,6 +69,7 @@ class RecetteRepository extends ServiceEntityRepository
             {
                 return $ingredient->getRecetteName();
             }
+            //
         }
         // Utilisateur entre un nom, ou plusieurs noms d'ingrédients
         // On récupérer les id de ces derniers

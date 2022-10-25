@@ -34,7 +34,7 @@ class PictureController extends AbstractController
 
         $relativePath = $picture->getPublicPath() . "/" . $picture->getRealPath();
         $location = $request->getUriForPath('/');
-        $location = $location . str_replace("/assets", "assets", $relativePath);
+        $location = $location . str_replace("/images", "images", $relativePath);
         if($picture)
         {
             return new JsonResponse($serializer->serialize($picture, 'json', ["groups" => "getPicture"]), Response::HTTP_OK, ["Location" => $location], true);
@@ -53,7 +53,7 @@ class PictureController extends AbstractController
         $picture->setMimeType($files->getClientMimeType());
         $picture->setRealName($files->getClientOriginalName());
         $picture->setStatus("on");
-        $picture->setPublicPath("/assets/pictures");
+        $picture->setPublicPath("/images/pictures");
         $entityManager->persist($picture);
         $entityManager->flush();
 
